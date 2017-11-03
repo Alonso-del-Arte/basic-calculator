@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Basic Calculator</title>
+	<style type="text/css"><!--
+	  #prevLine, #currLine { font-family: "Courier New", monospace; text-align: right; max-width: 400px; border: 1px solid black }
+	  #currLine { font-size: 24pt }
+	  button { font-weight: bold; font-size: 20pt }
+	  #btn0 { width: 3em }
+    // --></style>
+    <script type="text/javascript"><!-- 
+        var prevLineText = " ";
+        var currLineText = " ";
+        var prevLineElem, currLineElem;
+        var newNumberFlag = true;
+        var newCalcFlag = true;
+        var integerFlag = true;
+
+        function appendDigit(newDigit) {
+        	currLineText += newDigit;
+        	currLineElem.innerText = currLineText;
+        	if (newNumberFlag) {
+        	    newNumberFlag = false
+        	}
+        }
+
+        function appendSignificantZero() {
+        	if (!newNumberFlag) {
+        		currLineText += "0";
+        		currLineElem.innerText = currLineText
+        	}
+        }
+
+        function appendDecSep() {
+        	if (newNumberFlag) {
+        		currLineText = " 0";
+        		newNumberFlag = false
+        	}
+        	if (integerFlag) {
+        		currLineText += ".";
+        		integerFlag = false
+        	}
+        	currLineElem.innerText = currLineText;
+        }
+
+        function appendOper(newOper) {
+        	if (currLineText == " ") {
+        		currLineText = " 0" + newOper
+        	} else {
+        		currLineText += newOper
+        	}
+        	if (newCalcFlag) {
+        		prevLineText = currLineText;
+        		newCalcFlag = false
+        	} else {
+        		prevLineText += currLineText
+        	}
+        	currLineText = " ";
+        	prevLineElem.innerText = prevLineText;
+        	currLineElem.innerText = " 0";
+        	newNumberFlag = true;
+        	integerFlag = true
+        }
+
+        function execCalc() {
+        	prevLineText += currLineText;
+        	currLineText = " " + eval(prevLineText);
+        	prevLineText += " =";
+        	prevLineElem.innerText = prevLineText;
+        	currLineElem.innerText = currLineText;
+        	newNumberFlag = true;
+        	newCalcFlag = true;
+        }
+
+        function resetCalculator() {
+        	prevLineText = " ";
+        	currLineText = " ";
+        	newNumberFlag = true;
+            newCalcFlag = true;
+            integerFlag = true;
+        	prevLineElem.innerText = " 0";
+        	currLineElem.innerText = " 0"
+        }
+
+        function initCalculator() {
+        	prevLineElem = document.getElementById("prevLine");
+        	currLineElem = document.getElementById("currLine");
+        }
+
+    // --></script>
+</head>
+<body onload="initCalculator();">
+
+	<h1>Basic Calculator</h1>
+
+	<div id="prevLine">0</div>
+
+	<div id="currLine">0</div>
+
+	<button onclick="resetCalculator();">C</button>
+	<button>_</button>
+	<button>_</button>
+	<button id="btnDiv" class="operBtn" onclick="appendOper(' / ');">&div;</button>
+	<br />
+	<button id="btn7" class="numBtn" onclick="appendDigit(7);">7</button>
+	<button id="btn8" class="numBtn" onclick="appendDigit(8);">8</button>
+	<button id="btn9" class="numBtn" onclick="appendDigit(9);">9</button>
+	<button id="btnMult" class="operBtn" onclick="appendOper(' * ');">&times;</button>
+	<br />
+	<button id="btn4" class="numBtn" onclick="appendDigit(4);">4</button>
+	<button id="btn5" class="numBtn" onclick="appendDigit(5);">5</button>
+	<button id="btn6" class="numBtn" onclick="appendDigit(6);">6</button>
+	<button id="btnMinus" class="operBtn" onclick="appendOper(' - ');"">&minus;</button>
+	<br />
+	<button id="btn1" class="numBtn" onclick="appendDigit(1);">1</button>
+	<button id="btn2" class="numBtn" onclick="appendDigit(2);">2</button>
+	<button id="btn3" class="numBtn" onclick="appendDigit(3);">3</button>
+	<button id="btnPlus" class="operBtn" onclick="appendOper(' + ');"">+</button>
+	<br />
+	<button id="btn0" class="numBtn" onclick="appendSignificantZero();">0</button>
+	<button onclick="appendDecSep();">.</button>
+	<button id="btnEquals" class="operBtn" onclick="execCalc();">=</button>
+
+</body>
+</html>
