@@ -82,9 +82,56 @@
         	currLineElem.innerText = " 0"
         }
 
+		function processKeyPress(e) {
+			if (e.keyCode == 13) {
+				execCalc();
+				return
+			}
+			const keyId = e.key;
+			switch (keyId) {
+				case "c": 
+				case "C": 
+				    resetCalculator();
+					return
+				case "+": 
+				case "-": 
+				case "*": 
+				case "/": 
+				    appendOper(" " + keyId + " ");
+					return
+				case "0": 
+				case "1": 
+				case "2": 
+				case "3": 
+				case "4": 
+				case "5": 
+				case "6": 
+				case "7": 
+				case "8": 
+				case "9": 
+				    appendDigit(keyId);
+					return
+				case ".":
+				    appendDecSep;
+				    return
+				case "=":
+				    execCalc();
+					return
+				default:
+				    if (is)
+				    if (keyId.substring(0, 4) == "Digit") {
+						appendDigit(keyId.substring(5, 5))
+					} else if (keyId.substring(0, 5) == "Numpad") {
+						appendDigit(keyId.substring(6, 6))
+					}
+			}
+		}
+
         function initCalculator() {
         	prevLineElem = document.getElementById("prevLine");
         	currLineElem = document.getElementById("currLine");
+			document.getElementById("btnEquals").focus();
+			document.addEventListener('keydown', processKeyPress)
         }
 
     // --></script>
